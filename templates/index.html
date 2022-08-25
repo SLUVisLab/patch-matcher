@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+            background-color: #f1f1f1;
+        }
+        canvas {
+            border: none;
+            background-color: black;
+        }
+        .previous_img, .next_img {
+            display: inline-block; 
+        }
+        .container {
+            display: flex;
+            font-size: 15px;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        .left_col {
+            flex: 50%;
+            text-align: center;
+        }
+        .right_col {
+            text-align: center;
+            flex: 50%;
+        }
+        .header {
+            margin-top: 5%;
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        .buttons_div {
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        input.bottom_buttons {
+            width: 5em;  
+            height: 2em;
+        }
+        input.top_buttons,
+        button.not_found {
+            width: 10em;  
+            height: 3em;
+        }
+        input.custom_index {
+            text-align: right;
+        }
+        header h2 {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+        
+        <div class="header">
+            <header>
+                <h2>Index: {{ data["current_index"] }} / {{ data["unique_combos"] }}</h2>
+                <h4>Hotel Id: </h4>
+                <span>{{ data["hotel_id"] }}</span>
+                <h4>Object: </h4>
+                <span>{{data["object_category"]}}</span>
+            </header>
+        </div>
+        
+        <div class="container">
+
+            <div class="left_col">
+
+                <header>
+                    <h4>Test Patches: </h4>
+                </header>
+
+                {%for i in range(0, data["test_patches_len"])%}
+                    <img src="{{ data['test_patches'][i] }}">
+                {%endfor%}
+            
+            </div>
+
+            <div class="right_col">
+                
+                <header>
+                    <h4>Gallery Patches: </h4>
+                </header>
+                
+                {%for i in range(0, data["gallery_patches_len"])%}
+                    <img src="{{ data['gallery_patches'][i] }}">
+                {%endfor%}
+
+                
+
+            </div>
+
+        </div>
+
+        <div class="buttons_div">
+
+            <form class="custom_index", action="/", method="post">
+                <label for="custom_index">Go to Index:</label>
+                <input type="hidden" name="form_name" value="custom_index_form">
+                <input type="text" id="custom_index" name="custom_index" size="7" value="{{ data['index'] }}" class="custom_index" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                <input type="submit" class="bottom_buttons"><br>
+            </form><br>
+
+            <form class="previous_img", action="/", method="post">
+                <input type="hidden" name="form_name" value="previous_form">
+                <input type="submit" value="Prev" id="previous_img" name="previous_img" class="bottom_buttons" onclick="this.form.submit(); this.disabled = true;"><br>
+            </form>
+
+            <form class="next_img", action="/", method="post">
+                <input type="hidden" name="form_name" value="next_form">
+                <input type="submit" value="Next" id="next_img" name="next_img" class="bottom_buttons" onclick="this.form.submit(); this.disabled = true;"><br>
+            </form>
+        </div>
+
+</body>
+
+</html>
